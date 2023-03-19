@@ -8,6 +8,7 @@ import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@RequiredArgsConstructor
 @Service
 public class KakaoBlogSearchService {
 
@@ -34,9 +36,7 @@ public class KakaoBlogSearchService {
 
     private final RestTemplate restTemplate;
 
-    public KakaoBlogSearchService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private final BlogSearchKeywordsService blogSearchKeywordsService;
 
     public KakaoBlogSearchResponse searchBlogs(String query, int page, int size) {
         HttpHeaders headers = new HttpHeaders();
@@ -73,6 +73,8 @@ public class KakaoBlogSearchService {
 
         ResponseEntity<KakaoBlogSearchResponse> responseEntity =
             restTemplate.exchange(uriComponents.toUri(), HttpMethod.GET, requestEntity, KakaoBlogSearchResponse.class);
+
+        blogSearchKeywordsService.countSearchBlogKeyword(blogSearchCondition.getQuery());
 
         Pageable pageable = PageRequest.of(blogSearchCondition.getPage() - 1, blogSearchCondition.getSize());
 

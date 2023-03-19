@@ -14,17 +14,6 @@ public class BlogSearchResultDto {
     private String thumbnail;
     private String datetime;
 
-//    public static BlogSearchResultDto convertFromKakao(KakaoBlogDocument document) {
-//        title = document.getTitle();
-//        contents = document.getContents();
-//        url = document.getUrl();
-//        blogName = document.getBlogName();
-//        thumbnail = document.getThumbnail();
-//        datetime = document.getDatetime();
-//
-//        return this;
-//    }
-
     public static BlogSearchResultDto convertFromKakao(KakaoBlogDocument document) {
         return BlogSearchResultDto.builder()
             .title(document.getTitle())

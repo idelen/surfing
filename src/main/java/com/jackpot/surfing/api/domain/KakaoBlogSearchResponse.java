@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class KakaoBlogSearchResponse {
-
     private List<KakaoBlogDocument> documents;
     private KakaoBlogMeta meta;
 }
