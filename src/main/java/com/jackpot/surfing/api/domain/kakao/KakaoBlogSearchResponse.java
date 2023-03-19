@@ -1,4 +1,4 @@
-package com.jackpot.surfing.api.domain;
+package com.jackpot.surfing.api.domain.kakao;
 
 import java.util.List;
 import lombok.Getter;
