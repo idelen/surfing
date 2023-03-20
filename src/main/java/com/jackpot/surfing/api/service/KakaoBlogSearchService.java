@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,11 +25,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class KakaoBlogSearchService {
 
-//    @Value("${kakao.api.blog.url}")
-    private String blogUrl = "https://dapi.kakao.com/v2/search/blog";
+    @Value("${kakao.api.blog.url}")
+    private String blogUrl;
 
-//    @Value("${kakao.api.key}")
-    private String apiKey = "d01de35bce1eeb65cbc599f0693c3aab";
+    @Value("${kakao.api.key}")
+    private String apiKey;
 
     private final RestTemplate restTemplate;
 
