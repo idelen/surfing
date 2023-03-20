@@ -3,10 +3,12 @@ package com.jackpot.surfing.api.dto;
 import com.jackpot.surfing.api.validator.PageAndSizeLimit;
 import com.jackpot.surfing.api.validator.Sort;
 import javax.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.util.ObjectUtils;
 
 @Data
+@AllArgsConstructor
 public class BlogSearchCondition {
     @NotBlank
     private String query;
