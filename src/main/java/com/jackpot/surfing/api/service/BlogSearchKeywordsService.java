@@ -27,9 +27,10 @@ public class BlogSearchKeywordsService {
         return blogSearchKeywordsRepository.save(blogSearchKeywords).getId();
     }
 
-    public List<BlogSearchKeywordDto> getTop10KeywordsList() {
+    @Transactional
+    public List<BlogSearchKeywordDto> getPopularKeywordList(int size) {
         return blogSearchKeywordsRepository.findAll(Sort.by(Sort.Direction.DESC, "count")).stream()
-            .limit(10)
+            .limit(size)
             .map(BlogSearchKeywordDto::convert)
             .collect(Collectors.toList());
     }
