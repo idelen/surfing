@@ -7,18 +7,24 @@ import lombok.Getter;
 
 @Getter
 public enum BlogSearchSortOption {
-    ACCURACY("accuracy"),
-    RECENCY("receny");
+    ACCURACY("ACCURACY", "정확도순", "accuracy", "sim"),
+    RECENCY("RECENCY", "최신순", "receny", "date");
 
-    private final String sortOption;
+    private final String code;
+    private final String korDescription;
+    private final String kakaoSortOption;
+    private final String naverSortOption;
 
-    BlogSearchSortOption(String sortOption) {
-        this.sortOption = sortOption;
+    BlogSearchSortOption(String code, String korDescription, String kakaoSortOption, String naverSortOption) {
+        this.code = code;
+        this.korDescription = korDescription;
+        this.kakaoSortOption = kakaoSortOption;
+        this.naverSortOption = naverSortOption;
     }
 
-    public static List<String> getValues() {
+    public static List<String> getAllCode() {
         return Arrays.stream(BlogSearchSortOption.values())
-            .map(blogSearchSortOption -> blogSearchSortOption.getSortOption())
+            .map(BlogSearchSortOption::getCode)
             .collect(Collectors.toList());
     }
 }

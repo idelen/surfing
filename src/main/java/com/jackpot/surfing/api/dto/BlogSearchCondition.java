@@ -20,7 +20,7 @@ public class BlogSearchCondition {
     private Integer size;
 
     public BlogSearchCondition() {
-        this.sort = BlogSearchSortOption.ACCURACY.getSortOption();
+        this.sort = BlogSearchSortOption.ACCURACY.getKakaoSortOption();
         this.page = 1;
         this.size = 10;
     }

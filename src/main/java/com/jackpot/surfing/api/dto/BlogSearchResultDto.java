@@ -1,5 +1,6 @@
 package com.jackpot.surfing.api.dto;
 
+import com.jackpot.surfing.api.domain.Naver.NaverBlogItem;
 import com.jackpot.surfing.api.domain.kakao.KakaoBlogDocument;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,16 @@ public class BlogSearchResultDto {
             .blogName(document.getBlogName())
             .thumbnail(document.getThumbnail())
             .datetime(document.getDatetime())
+            .build();
+    }
+
+    public static BlogSearchResultDto convertFromNaver(NaverBlogItem item) {
+        return BlogSearchResultDto.builder()
+            .title(item.getTitle())
+            .contents(item.getDescription())
+            .url(item.getLink())
+            .blogName(item.getBloggername())
+            .datetime(item.getPosddate())
             .build();
     }
 }

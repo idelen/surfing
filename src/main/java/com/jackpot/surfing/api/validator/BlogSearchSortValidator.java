@@ -8,6 +8,6 @@ public class BlogSearchSortValidator implements ConstraintValidator<Sort, String
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return BlogSearchSortOption.getValues().contains(value);
+        return BlogSearchSortOption.getAllCode().contains(value);
     }
 }
