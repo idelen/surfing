@@ -1,6 +1,5 @@
 package com.jackpot.surfing.api.error;
 
-import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.jackpot.surfing.api.domain.Naver;
+package com.jackpot.surfing.api.domain.naver;
 
 import lombok.Data;
 

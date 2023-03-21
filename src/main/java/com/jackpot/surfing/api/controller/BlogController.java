@@ -1,10 +1,13 @@
 package com.jackpot.surfing.api.controller;
 
+import com.jackpot.surfing.api.application.BlogSearchApplication;
 import com.jackpot.surfing.api.dto.BlogSearchCondition;
 import com.jackpot.surfing.api.dto.BlogSearchKeywordDto;
 import com.jackpot.surfing.api.dto.BlogSearchResultDto;
 import com.jackpot.surfing.api.service.BlogSearchKeywordsService;
+import com.jackpot.surfing.api.service.BlogSearchService;
 import com.jackpot.surfing.api.service.KakaoBlogSearchService;
+import com.jackpot.surfing.api.service.NaverBlogSearchService;
 import java.util.Collections;
 import java.util.List;
 import javax.validation.Valid;
@@ -26,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/blogs")
 public class BlogController {
-    private final KakaoBlogSearchService kakaoBlogSearchService;
+    private final BlogSearchApplication blogSearchApplication;
 
     private final BlogSearchKeywordsService blogSearchKeywordsService;
 
@@ -36,7 +39,7 @@ public class BlogController {
     @ResponseBody
     public ResponseEntity<Page<BlogSearchResultDto>> searchBlogsPaging(@RequestBody @Valid BlogSearchCondition blogSearchCondition) {
         try {
-            return ResponseEntity.ok(kakaoBlogSearchService.searchBlogsPaging(blogSearchCondition));
+            return ResponseEntity.ok(blogSearchApplication.searchBlogsPaging(blogSearchCondition));
         } catch (Exception e) {
             log.error("[BlogController] error : " + e);
 

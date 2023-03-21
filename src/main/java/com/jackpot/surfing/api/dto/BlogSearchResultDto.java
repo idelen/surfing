@@ -1,6 +1,6 @@
 package com.jackpot.surfing.api.dto;
 
-import com.jackpot.surfing.api.domain.Naver.NaverBlogItem;
+import com.jackpot.surfing.api.domain.naver.NaverBlogItem;
 import com.jackpot.surfing.api.domain.kakao.KakaoBlogDocument;
 import lombok.Builder;
 import lombok.Getter;
