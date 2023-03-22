@@ -27,25 +27,25 @@ public class BlogControllerTest {
     @Test
     public void searchBlogsPagingTest_invalidParameters() throws Exception {
         // 누락된 query 값
-        mockMvc.perform(post("/blogs/search/paging")
+        mockMvc.perform(post("/api/v1/blogs/search/paging")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new BlogSearchCondition(null, "accuracy", 1, 10))))
             .andExpect(status().isBadRequest());
 
         // 잘못된 sort 값
-        mockMvc.perform(post("/blogs/search/paging")
+        mockMvc.perform(post("/api/v1/blogs/search/paging")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new BlogSearchCondition("spring", "invalid", 1, 10))))
             .andExpect(status().isBadRequest());
 
         // 음수로 된 page 값
-        mockMvc.perform(post("/blogs/search/paging")
+        mockMvc.perform(post("/api/v1/blogs/search/paging")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new BlogSearchCondition("spring", "accuracy", -1, 10))))
             .andExpect(status().isBadRequest());
 
         // 음수로 된 size 값
-        mockMvc.perform(post("/blogs/search/paging")
+        mockMvc.perform(post("/api/v1/blogs/search/paging")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new BlogSearchCondition("spring", "accuracy", 1, -1))))
             .andExpect(status().isBadRequest());
@@ -53,7 +53,7 @@ public class BlogControllerTest {
 
     @Test
     public void getPopularKeywordListTest_invalidParameter() throws Exception {
-        mockMvc.perform(get("/blogs/popular-search")
+        mockMvc.perform(get("/api/v1/blogs/popular-search")
                 .param("size", String.valueOf(-1)))
             .andExpect(status().isBadRequest());
     }
