@@ -9,6 +9,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class KakaoBlogSearchService extends BlogSearchService {
     }
 
     private URI createUri(BlogSearchCondition blogSearchCondition) {
-        return UriComponentsBuilder.fromHttpUrl(BLOG_URL)
+        return UriComponentsBuilder.fromHttpUrl(Optional.ofNullable(BLOG_URL).orElse("http://localhos:8080"))
             .queryParam("query", blogSearchCondition.getQuery())
             .queryParam("sort", convertSort(blogSearchCondition.getSort()))
             .queryParam("page", blogSearchCondition.getPage())

@@ -32,7 +32,7 @@ public class BlogSearchResultDto {
             .contents(item.getDescription())
             .url(item.getLink())
             .blogName(item.getBloggername())
-            .datetime(item.getPosddate())
+            .datetime(item.getPostdate())
             .build();
     }
 }

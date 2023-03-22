@@ -6,11 +6,13 @@ import com.jackpot.surfing.api.dto.BlogSearchKeywordDto;
 import com.jackpot.surfing.api.dto.BlogSearchResultDto;
 import com.jackpot.surfing.api.service.BlogSearchKeywordsService;
 import com.jackpot.surfing.api.validator.PopularSizeLimit;
+import java.util.Collections;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,16 +38,29 @@ public class BlogController {
     @PostMapping("/search/paging")
     @ResponseBody
     public ResponseEntity<Page<BlogSearchResultDto>> searchBlogsPaging(@RequestBody @Valid BlogSearchCondition blogSearchCondition) {
-        log.info("[BlogSearchKeywordsService] before save. query : " + blogSearchCondition.getQuery());
-        blogSearchKeywordsService.countSearchBlogKeyword(blogSearchCondition.getQuery());
-        log.info("[BlogSearchKeywordsService] after save. query : " + blogSearchCondition.getQuery());
+        try {
+            log.info("[BlogController] before save. query : "
+                + blogSearchCondition.getQuery());
+            blogSearchKeywordsService.countUpSearchBlogKeyword(blogSearchCondition.getQuery());
+            log.info("[BlogController] after save. query : "
+                + blogSearchCondition.getQuery());
 
-        return ResponseEntity.ok(blogSearchApplication.searchBlogsPaging(blogSearchCondition));
+            return ResponseEntity.ok(blogSearchApplication.searchBlogsPaging(blogSearchCondition));
+        } catch (Exception e) {
+            log.error("[BlogController] Unknown Error : " + e);
+            return ResponseEntity.internalServerError().body(new PageImpl<>(Collections.emptyList()));
+        }
     }
 
     @GetMapping("/popular-search")
     public ResponseEntity<List<BlogSearchKeywordDto>> getPopularKeywordList(@RequestParam(defaultValue = POPULAR_SEARCH_DEFAULT_SIZE) @PopularSizeLimit int size) {
-        return ResponseEntity.ok(blogSearchKeywordsService.getPopularKeywordList(size));
+        try {
+            return ResponseEntity.ok(blogSearchKeywordsService.getPopularKeywordList(size));
+        }
+        catch (Exception e) {
+            log.error("[BlogController] Unknown Error : " + e);
+            return ResponseEntity.internalServerError().body(Collections.emptyList());
+        }
     }
 }
 

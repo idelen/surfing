@@ -9,5 +9,5 @@ public class NaverBlogItem {
     private String description;
     private String bloggername;
     private String bloggerlink;
-    private String posddate;
+    private String postdate;
 }

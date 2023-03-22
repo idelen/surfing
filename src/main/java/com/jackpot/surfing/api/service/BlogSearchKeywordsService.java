@@ -17,17 +17,16 @@ public class BlogSearchKeywordsService {
     private final BlogSearchKeywordsRepository blogSearchKeywordsRepository;
 
     @Transactional
-    public Long countSearchBlogKeyword(String query) {
-
+    public void countUpSearchBlogKeyword(String query) {
         BlogSearchKeywords blogSearchKeywords = blogSearchKeywordsRepository.findByKeyword(query)
             .orElse(new BlogSearchKeywords(query, 0));
 
         blogSearchKeywords.incrementCount();
 
-        return blogSearchKeywordsRepository.save(blogSearchKeywords).getId();
+        blogSearchKeywordsRepository.save(blogSearchKeywords);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BlogSearchKeywordDto> getPopularKeywordList(int size) {
         return blogSearchKeywordsRepository.findAll(Sort.by(Sort.Direction.DESC, "count")).stream()
             .limit(size)

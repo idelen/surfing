@@ -25,7 +25,7 @@ public class BlogControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testSearchBlogsPaging_invalidParameters() throws Exception {
+    public void searchBlogsPagingTest_invalidParameters() throws Exception {
         // 누락된 query 값
         mockMvc.perform(post("/blogs/search/paging")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +52,7 @@ public class BlogControllerTest {
     }
 
     @Test
-    public void testGetPopularKeywordList_invalidParameter() throws Exception {
+    public void getPopularKeywordListTest_invalidParameter() throws Exception {
         mockMvc.perform(get("/blogs/popular-search")
                 .param("size", String.valueOf(-1)))
             .andExpect(status().isBadRequest());

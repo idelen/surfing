@@ -3,6 +3,7 @@ package com.jackpot.surfing.config;
 import com.jackpot.surfing.api.error.ErrorResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -19,5 +20,10 @@ public class ExceptionAdvisor {
             .forEach(c -> errors.put(((FieldError) c).getField(), c.getDefaultMessage()));
 
         return ErrorResponseEntity.toResponseEntity(HttpStatus.BAD_REQUEST, MethodArgumentNotValidException.class.getSimpleName(), errors.toString());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponseEntity> handleValidationExceptions(ConstraintViolationException ex){
+        return ErrorResponseEntity.toResponseEntity(HttpStatus.BAD_REQUEST, MethodArgumentNotValidException.class.getSimpleName(), ex.getMessage());
     }
 }
