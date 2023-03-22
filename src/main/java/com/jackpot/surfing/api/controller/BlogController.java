@@ -5,16 +5,12 @@ import com.jackpot.surfing.api.dto.BlogSearchCondition;
 import com.jackpot.surfing.api.dto.BlogSearchKeywordDto;
 import com.jackpot.surfing.api.dto.BlogSearchResultDto;
 import com.jackpot.surfing.api.service.BlogSearchKeywordsService;
-import com.jackpot.surfing.api.service.BlogSearchService;
-import com.jackpot.surfing.api.service.KakaoBlogSearchService;
-import com.jackpot.surfing.api.service.NaverBlogSearchService;
-import java.util.Collections;
+import com.jackpot.surfing.api.validator.PopularSizeLimit;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,18 +34,15 @@ public class BlogController {
     @PostMapping("/search/paging")
     @ResponseBody
     public ResponseEntity<Page<BlogSearchResultDto>> searchBlogsPaging(@RequestBody @Valid BlogSearchCondition blogSearchCondition) {
-        try {
-            return ResponseEntity.ok(blogSearchApplication.searchBlogsPaging(blogSearchCondition));
-        } catch (Exception e) {
-            log.error("[BlogController] error : " + e);
+        log.info("[BlogSearchKeywordsService] before save. query : " + blogSearchCondition.getQuery());
+        blogSearchKeywordsService.countSearchBlogKeyword(blogSearchCondition.getQuery());
+        log.info("[BlogSearchKeywordsService] after save. query : " + blogSearchCondition.getQuery());
 
-            // todo : status 변경필요
-            return ResponseEntity.badRequest().body(new PageImpl<>(Collections.emptyList()));
-        }
+        return ResponseEntity.ok(blogSearchApplication.searchBlogsPaging(blogSearchCondition));
     }
 
     @GetMapping("/popular-search")
-    public ResponseEntity<List<BlogSearchKeywordDto>> getPopularKeywordList(@RequestParam(defaultValue = POPULAR_SEARCH_DEFAULT_SIZE) int size) {
+    public ResponseEntity<List<BlogSearchKeywordDto>> getPopularKeywordList(@RequestParam(defaultValue = POPULAR_SEARCH_DEFAULT_SIZE) @PopularSizeLimit int size) {
         return ResponseEntity.ok(blogSearchKeywordsService.getPopularKeywordList(size));
     }
 }

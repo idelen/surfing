@@ -1,6 +1,5 @@
 package com.jackpot.surfing.api.service;
 
-import com.jackpot.surfing.api.client.KakaoBlogSearchWebClient;
 import com.jackpot.surfing.api.client.NaverBlogSearchWebClient;
 import com.jackpot.surfing.api.domain.naver.NaverBlogSearchResponse;
 import com.jackpot.surfing.api.dto.BlogSearchCondition;
@@ -15,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RequiredArgsConstructor
@@ -27,15 +23,6 @@ public class NaverBlogSearchService extends BlogSearchService {
 
     @Value("${naver.api.blog.url}")
     private String BLOG_URL;
-
-    @Value("${naver.api.client.id}")
-    private String API_CLIENT_ID;
-
-    @Value("${naver.api.client.secret}")
-    private String API_CLIENT_SECRET;
-
-    public static final String X_NAVER_CLIENT_ID = "X-Naver-Client-Id";
-    public static final String X_NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
 
     private final NaverBlogSearchWebClient naverBlogSearchWebClient;
 

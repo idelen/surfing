@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 @Slf4j
@@ -25,14 +23,13 @@ public class BlogSearchApplication {
             return kakaoBlogSearchService.searchBlogsPaging(blogSearchCondition);
         } catch (WebClientResponseException e) {
             if (e.getStatusCode().is4xxClientError()) {
-                log.error("[BlogSearchApplication] client error : " + e);
-                // todo : 테스트용 추가. 이후 삭제할것.
-                return naverBlogSearchService.searchBlogsPaging(blogSearchCondition);
-//            throw e;
+                log.error("[BlogSearchApplication] client error : " + e.getStackTrace());
+                throw e;
             }
 
             if (e.getStatusCode().is5xxServerError()) {
                 log.error("[BlogSearchApplication] server error : " + e);
+                log.info("[BlogSearchApplication] Retry to Naver.");
                 return naverBlogSearchService.searchBlogsPaging(blogSearchCondition);
             }
 

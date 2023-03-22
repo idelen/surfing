@@ -25,16 +25,11 @@ public class KakaoBlogSearchService extends BlogSearchService {
 
     @Value("${kakao.api.blog.url}")
     private String BLOG_URL;
-    private final BlogSearchKeywordsService blogSearchKeywordsService;
     private final KakaoBlogSearchWebClient kakaoBlogSearchWebClient;
 
     @Override
     public Page<BlogSearchResultDto> searchBlogsPaging(BlogSearchCondition blogSearchCondition) {
         KakaoBlogSearchResponse kakaoBlogSearchResponse = kakaoBlogSearchWebClient.getBlogs(createUri(blogSearchCondition));
-
-        log.info("[BlogSearchKeywordsService] before save. query : " + blogSearchCondition.getQuery());
-        blogSearchKeywordsService.countSearchBlogKeyword(blogSearchCondition.getQuery());
-        log.info("[BlogSearchKeywordsService] after save. query : " + blogSearchCondition.getQuery());
 
         List<BlogSearchResultDto> resultDtoList =
             Objects.requireNonNull(kakaoBlogSearchResponse.getDocuments()).stream()

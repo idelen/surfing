@@ -2,7 +2,6 @@ package com.jackpot.surfing.api.dto;
 
 import com.jackpot.surfing.api.domain.BlogSearchKeywords;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
