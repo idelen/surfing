@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.jackpot.surfing.api.client.NaverBlogSearchWebClient;
-import com.jackpot.surfing.api.domain.kakao.KakaoBlogDocument;
 import com.jackpot.surfing.api.domain.naver.NaverBlogItem;
 import com.jackpot.surfing.api.domain.naver.NaverBlogSearchResponse;
 import com.jackpot.surfing.api.dto.BlogSearchCondition;
