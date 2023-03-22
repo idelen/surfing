@@ -23,7 +23,7 @@ public class BlogSearchApplication {
             return kakaoBlogSearchService.searchBlogsPaging(blogSearchCondition);
         } catch (WebClientResponseException e) {
             if (e.getStatusCode().is4xxClientError()) {
-                log.error("[BlogSearchApplication] client error : " + e.getStackTrace());
+                log.error("[BlogSearchApplication] client error : " + e);
                 throw e;
             }
 

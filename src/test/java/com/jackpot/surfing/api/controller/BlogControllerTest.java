@@ -50,4 +50,11 @@ public class BlogControllerTest {
                 .content(objectMapper.writeValueAsString(new BlogSearchCondition("spring", "accuracy", 1, -1))))
             .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void testGetPopularKeywordList_invalidParameter() throws Exception {
+        mockMvc.perform(get("/blogs/popular-search")
+                .param("size", String.valueOf(-1)))
+            .andExpect(status().isBadRequest());
+    }
 }
